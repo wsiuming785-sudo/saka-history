@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2018年10-11月更新公告 - 網站更新歷史</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            --archive-color: #8e9eab;
+        }
+
+        .dark-mode {
+            --primary-color: #8a2be2;
+            --secondary-color: #4169e1;
+            --accent-color: #ff8787;
+            --text-color: #f8f9fa;
+            --bg-color: #121212;
+            --card-bg: rgba(30, 30, 30, 0.8);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            --archive-color: #6c757d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+            padding-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .header-section {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: white;
+        }
+
+        .header-section h1 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-section p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .archive-badge {
+            background: rgba(142, 158, 171, 0.3);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .update-date {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .update-date i {
+            margin-right: 0.5rem;
+        }
+
+        .update-title {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .month-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .month-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .update-item {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .update-item-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .update-item-title i {
+            margin-right: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .update-item-desc {
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .meta-info {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-value {
+            font-weight: 600;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            color: var(--accent-color);
+            transform: translateX(-5px);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 1.5rem;
+            }
+            
+            .header-section {
+                padding: 2rem 0 1rem;
+            }
+            
+            .header-section h1 {
+                font-size: 2rem;
+            }
+            
+            .meta-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主題切換按鈕 -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="container">
+        <!-- 頁面標題 -->
+        <div class="header-section">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> 返回更新歷史
+            </a>
+            <h1>2018年10-11月更新公告</h1>
+            <p>網站重要功能升級與系統改進</p>
+            <div class="archive-badge">
+                <i class="fas fa-archive"></i> 已歸檔 - 此為歷史更新內容
+            </div>
+        </div>
+
+        <!-- 更新內容 -->
+        <div class="glass-card">
+            <div class="update-date">
+                <i class="far fa-calendar-alt"></i>
+                更新期間：2018年10月1日 - 2018年11月30日
+            </div>
+            <h2 class="update-title">2018/10~11月總更新</h2>
+            
+            <!-- 10月更新 -->
+            <div class="month-section">
+                <h3 class="month-title">10月更新內容</h3>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-shield-alt"></i>
+                        安全性增加
+                    </div>
+                    <p class="update-item-desc">開始使用 HTTPS 加密協議，提升網站安全性</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-globe"></i>
+                        改用更好的域址
+                    </div>
+                    <p class="update-item-desc">更換為更專業、易記的網站域名</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-plus-circle"></i>
+                        增加總頁與 Q&A
+                    </div>
+                    <p class="update-item-desc">新增網站總覽頁面和常見問題解答頁面</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-music"></i>
+                        修改顯示點歌系統狀態
+                    </div>
+                    <p class="update-item-desc">優化點歌系統狀態顯示方式，提供更清晰的系統狀態信息</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-home"></i>
+                        更新登入主頁 2.0
+                    </div>
+                    <p class="update-item-desc">全新設計的登入主頁面，使用 NCS 點播作為前站</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-images"></i>
+                        icon 和圖片更改
+                    </div>
+                    <p class="update-item-desc">更新網站圖標和圖片資源，提升視覺效果</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-forward"></i>
+                        更新顯示下一首歌名 v2.0
+                    </div>
+                    <p class="update-item-desc">改進下一首歌曲顯示功能，提供更豐富的信息</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-sync-alt"></i>
+                        更新舊點播系統
+                    </div>
+                    <p class="update-item-desc">升級舊版點播系統，同時保留 v2.0 和 v1.0 版本兼容</p>
+                </div>
+            </div>
+            
+            <!-- 11月更新 -->
+            <div class="month-section">
+                <h3 class="month-title">11月更新內容</h3>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-users"></i>
+                        更新會員系統為 3.0
+                    </div>
+                    <p class="update-item-desc">全面升級會員系統，新增申請會員系統功能</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-info-circle"></i>
+                        增加現在播放信息
+                    </div>
+                    <p class="update-item-desc">新增當前播放歌曲的詳細信息顯示</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-eye"></i>
+                        增加訪客頁面
+                    </div>
+                    <p class="update-item-desc">新增訪客專用頁面，提供基本功能體驗</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-play-circle"></i>
+                        點播頁 1 和 3 增加現在播放器
+                    </div>
+                    <p class="update-item-desc">在點播頁面1和3中增加當前播放器功能</p>
+                </div>
+                
+                <div class="update-item">
+                    <div class="update-item-title">
+                        <i class="fas fa-tasks"></i>
+                        修改顯示點歌系統狀態 2.0
+                    </div>
+                    <p class="update-item-desc">進一步優化點歌系統狀態顯示，提供更詳細的系統信息</p>
+                </div>
+            </div>
+            
+            <!-- 元信息 -->
+            <div class="meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">發佈日期</span>
+                    <span class="meta-value">2018-11-12</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">歸檔日期</span>
+                    <span class="meta-value">2025-10-15</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">更新類型</span>
+                    <span class="meta-value">系統功能升級</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁腳 -->
+        <div class="footer">
+            <p>© 2023 網站更新歷史 | 此為歸檔內容，最後更新於 2018年11月12日</p>
+        </div>
+    </div>
+
+    <script>
+        // 主題切換功能
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // 卡片懸停效果增強
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.01)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
