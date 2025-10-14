@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024年12月更新公告 - 網站更新歷史</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --accent-2: #f5576c;
+            --accent-3: #4facfe;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            --archive-color: #8e9eab;
+            --new-badge: linear-gradient(135deg, #ff6b6b, #ffd93d);
+        }
+
+        .dark-mode {
+            --primary-color: #764ba2;
+            --secondary-color: #667eea;
+            --accent-color: #f093fb;
+            --accent-2: #ff6b6b;
+            --accent-3: #4facfe;
+            --text-color: #f8f9fa;
+            --bg-color: #121212;
+            --card-bg: rgba(30, 30, 30, 0.85);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            --archive-color: #6c757d;
+            --new-badge: linear-gradient(135deg, #ff8787, #ffd978);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+            padding-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1100px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            margin-bottom: 2rem;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .header-section {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: white;
+        }
+
+        .header-section h1 {
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-size: 2.5rem;
+        }
+
+        .header-section p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .archive-badge {
+            background: rgba(142, 158, 171, 0.3);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .new-badge {
+            background: var(--new-badge);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .update-date {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .update-date i {
+            margin-right: 0.5rem;
+        }
+
+        .update-title {
+            font-weight: 800;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-divider {
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-2), var(--accent-3));
+            border-radius: 3px;
+            margin: 2.5rem 0;
+            opacity: 0.7;
+        }
+
+        .category-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .category-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid;
+            display: flex;
+            align-items: center;
+        }
+
+        .category-title i {
+            margin-right: 0.7rem;
+        }
+
+        .category-total {
+            border-bottom-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .category-playback {
+            border-bottom-color: var(--accent-3);
+            color: var(--accent-3);
+        }
+
+        .update-item {
+            margin-bottom: 1.5rem;
+            padding: 1.2rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+        }
+
+        .dark-mode .update-item {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .update-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-mode .update-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .item-total {
+            border-left-color: var(--accent-color);
+        }
+
+        .item-playback {
+            border-left-color: var(--accent-3);
+        }
+
+        .update-item-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .update-item-title i {
+            margin-right: 0.5rem;
+        }
+
+        .title-total {
+            color: var(--accent-color);
+        }
+
+        .title-playback {
+            color: var(--accent-3);
+        }
+
+        .update-item-desc {
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .version-badge {
+            background: var(--accent-2);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .meta-info {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-value {
+            font-weight: 600;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .back-button:hover {
+            color: var(--accent-color);
+            transform: translateX(-5px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .server-highlight {
+            color: var(--accent-2);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 1.5rem;
+            }
+            
+            .header-section {
+                padding: 2rem 0 1rem;
+            }
+            
+            .header-section h1 {
+                font-size: 2rem;
+            }
+            
+            .update-title {
+                font-size: 1.6rem;
+            }
+            
+            .meta-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .category-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主題切換按鈕 -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="container">
+        <!-- 頁面標題 -->
+        <div class="header-section">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> 返回更新歷史
+            </a>
+            <h1>新的 (2024~12月)</h1>
+            <p>近期重要系統升級與功能改進</p>
+            <div class="archive-badge">
+                <i class="fas fa-archive"></i> 已歸檔 - 此為歷史更新內容
+            </div>
+        </div>
+
+        <!-- 更新內容 -->
+        <div class="glass-card">
+            <div class="update-date">
+                <i class="far fa-calendar-alt"></i>
+                更新期間：2024年12月
+            </div>
+            <h2 class="update-title">
+                新的 (2024~12月)
+                <span class="new-badge">近期更新</span>
+            </h2>
+            
+            <!-- 總頁/會員 -->
+            <div class="category-section">
+                <h3 class="category-title category-total">
+                    <i class="fas fa-home"></i>
+                    總頁/會員
+                </h3>
+                
+                <div class="update-item item-total">
+                    <div class="update-item-title title-total">
+                        <i class="fas fa-wrench"></i>
+                        修復登入主頁1.5
+                        <span class="version-badge">v2.0</span>
+                    </div>
+                    <p class="update-item-desc">修復登入主頁1.5版本問題，並且用 NCS 點播 (NC 台) 來作前站，將 NC 台獨立出來作為前站</p>
+                </div>
+                
+                <div class="update-item item-total">
+                    <div class="update-item-title title-total">
+                        <i class="fas fa-globe"></i>
+                        改用更好的域址
+                    </div>
+                    <p class="update-item-desc">更換為更專業、易記的網站域名，提升品牌形象和用戶訪問體驗</p>
+                </div>
+                
+                <div class="update-item item-total">
+                    <div class="update-item-title title-total">
+                        <i class="fas fa-lock"></i>
+                        改用 SSL 加強保護
+                    </div>
+                    <p class="update-item-desc">對登入/註冊等頁面使用 SSL 加密，加強用戶帳號和密碼的保護</p>
+                </div>
+                
+                <div class="update-item item-total">
+                    <div class="update-item-title title-total">
+                        <i class="fas fa-tools"></i>
+                        修復大多數的 function
+                    </div>
+                    <p class="update-item-desc">修復系統中大多數功能問題，提升系統穩定性和用戶體驗</p>
+                </div>
+                
+                <div class="update-item item-total">
+                    <div class="update-item-title title-total">
+                        <i class="fas fa-user-tie"></i>
+                        增加台主 login 入台管
+                    </div>
+                    <p class="update-item-desc">新增台主登入電台管理系統功能，提供更完善的管理權限</p>
+                </div>
+                
+                <div class="update-item item-total">
+                    <div class="update-item-title title-total">
+                        <i class="fas fa-user-cog"></i>
+                        增加管理員 login 入台管
+                    </div>
+                    <p class="update-item-desc">新增管理員登入電台管理系統功能，強化系統管理能力</p>
+                </div>
+                
+                <div class="update-item item-total">
+                    <div class="update-item-title title-total">
+                        <i class="fas fa-server"></i>
+                        使用 NUC 來當 server
+                    </div>
+                    <p class="update-item-desc">採用 Intel NUC 作為伺服器，<span class="server-highlight">因此可以實現 24 小時不間斷運行了</span></p>
+                </div>
+            </div>
+            
+            <div class="section-divider"></div>
+            
+            <!-- 點播頁 -->
+            <div class="category-section">
+                <h3 class="category-title category-playback">
+                    <i class="fas fa-music"></i>
+                    點播頁
+                </h3>
+                
+                <div class="update-item item-playback">
+                    <div class="update-item-title title-playback">
+                        <i class="fas fa-wrench"></i>
+                        修復登入主頁1.5
+                        <span class="version-badge">v2.0</span>
+                    </div>
+                    <p class="update-item-desc">修復登入主頁1.5版本問題，並且用 NCS 點播 (NC 台) 來作前站，將 NC 台獨立出來作為前站</p>
+                </div>
+                
+                <div class="update-item item-playback">
+                    <div class="update-item-title title-playback">
+                        <i class="fas fa-user-cog"></i>
+                        增加管理員 login 入台管
+                    </div>
+                    <p class="update-item-desc">新增管理員登入電台管理系統功能，強化系統管理能力</p>
+                </div>
+                
+                <div class="update-item item-playback">
+                    <div class="update-item-title title-playback">
+                        <i class="fas fa-trash-alt"></i>
+                        修復 admin 櫂太多
+                    </div>
+                    <p class="update-item-desc">修復管理員界面中過多不必要的功能或選項，簡化操作流程</p>
+                </div>
+                
+                <div class="update-item item-playback">
+                    <div class="update-item-title title-playback">
+                        <i class="fas fa-link"></i>
+                        把本來域址改因為新的
+                    </div>
+                    <p class="update-item-desc">更新系統中所有連結，將原本的網域名稱更改為新的網域名稱</p>
+                </div>
+                
+                <div class="update-item item-playback">
+                    <div class="update-item-title title-playback">
+                        <i class="fas fa-tools"></i>
+                        修復大多數的 function
+                    </div>
+                    <p class="update-item-desc">修復系統中大多數功能問題，提升系統穩定性和用戶體驗</p>
+                </div>
+                
+                <div class="update-item item-playback">
+                    <div class="update-item-title title-playback">
+                        <i class="fas fa-server"></i>
+                        使用 NUC 來當 server
+                    </div>
+                    <p class="update-item-desc">採用 Intel NUC 作為伺服器，<span class="server-highlight">因此可以實現 24 小時不間斷運行了</span></p>
+                </div>
+                
+                <div class="update-item item-playback">
+                    <div class="update-item-title title-playback">
+                        <i class="fas fa-images"></i>
+                        陸續增加點歌封面
+                    </div>
+                    <p class="update-item-desc">持續為點播系統添加歌曲封面圖片，提升視覺體驗和美觀度</p>
+                </div>
+            </div>
+            
+            <!-- 元信息 -->
+            <div class="meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">發佈日期</span>
+                    <span class="meta-value">2024-07-28</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">歸檔日期</span>
+                    <span class="meta-value">2025-10-15</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">更新類型</span>
+                    <span class="meta-value">系統架構升級</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁腳 -->
+        <div class="footer">
+            <p>© 2023 網站更新歷史 | 此為歸檔內容，最後更新於 2024年7月28日</p>
+        </div>
+    </div>
+
+    <script>
+        // 主題切換功能
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // 卡片懸停效果增強
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.01)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // 項目懸停效果
+        document.querySelectorAll('.update-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(8px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+</body>
+</html>
