@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主台異地無限流量總修復和更新 - 網站更新歷史</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --accent-2: #4facfe;
+            --accent-3: #43e97b;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            --archive-color: #8e9eab;
+        }
+
+        .dark-mode {
+            --primary-color: #764ba2;
+            --secondary-color: #667eea;
+            --accent-color: #f093fb;
+            --accent-2: #4facfe;
+            --accent-3: #43e97b;
+            --text-color: #f8f9fa;
+            --bg-color: #121212;
+            --card-bg: rgba(30, 30, 30, 0.85);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            --archive-color: #6c757d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+            padding-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            margin-bottom: 2rem;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .header-section {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: white;
+        }
+
+        .header-section h1 {
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-size: 2.5rem;
+        }
+
+        .header-section p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .archive-badge {
+            background: rgba(142, 158, 171, 0.3);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .update-badge {
+            background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .update-date {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .update-date i {
+            margin-right: 0.5rem;
+        }
+
+        .update-title {
+            font-weight: 800;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-divider {
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-2), var(--accent-3));
+            border-radius: 3px;
+            margin: 2.5rem 0;
+            opacity: 0.7;
+        }
+
+        .category-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .category-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid;
+            display: flex;
+            align-items: center;
+        }
+
+        .category-title i {
+            margin-right: 0.7rem;
+        }
+
+        .category-reception {
+            border-bottom-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .category-usercenter {
+            border-bottom-color: var(--accent-2);
+            color: var(--accent-2);
+        }
+
+        .category-playback {
+            border-bottom-color: var(--accent-3);
+            color: var(--accent-3);
+        }
+
+        .update-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .update-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+        }
+
+        .dark-mode .update-item {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .update-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-mode .update-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .item-reception {
+            border-left-color: var(--accent-color);
+        }
+
+        .item-usercenter {
+            border-left-color: var(--accent-2);
+        }
+
+        .item-playback {
+            border-left-color: var(--accent-3);
+        }
+
+        .update-item-title {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .update-item-title i {
+            margin-right: 0.5rem;
+        }
+
+        .title-reception {
+            color: var(--accent-color);
+        }
+
+        .title-usercenter {
+            color: var(--accent-2);
+        }
+
+        .title-playback {
+            color: var(--accent-3);
+        }
+
+        .update-item-desc {
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 1rem;
+        }
+
+        .feature-list li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .feature-list li:before {
+            content: '✓';
+            color: var(--accent-3);
+            font-weight: bold;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .version-badge {
+            background: var(--accent-2);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .time-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin: 0 0.3rem;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .meta-info {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-value {
+            font-weight: 600;
+        }
+
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            background: #ffa726;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .back-button:hover {
+            color: var(--accent-color);
+            transform: translateX(-5px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .sub-section {
+            margin: 1.5rem 0;
+            padding-left: 1rem;
+            border-left: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .sub-title {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 1.5rem;
+            }
+            
+            .header-section {
+                padding: 2rem 0 1rem;
+            }
+            
+            .header-section h1 {
+                font-size: 2rem;
+            }
+            
+            .update-title {
+                font-size: 1.6rem;
+            }
+            
+            .meta-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .category-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .update-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主題切換按鈕 -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="container">
+        <!-- 頁面標題 -->
+        <div class="header-section">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> 返回更新歷史
+            </a>
+            <h1>【主台-異地-無限流量】總修復和更新</h1>
+            <p>全面系統升級與功能優化</p>
+            <div class="archive-badge">
+                <i class="fas fa-archive"></i> 已歸檔 - 此為歷史更新內容
+            </div>
+        </div>
+
+        <!-- 更新內容 -->
+        <div class="glass-card">
+            <div class="update-date">
+                <i class="far fa-calendar-alt"></i>
+                發佈日期：2025年4月30日
+            </div>
+            <h2 class="update-title">
+                【主台-異地-無限流量】總修復和更新
+                <span class="update-badge">重大更新</span>
+            </h2>
+            
+            <!-- 接待中心頁面 -->
+            <div class="category-section">
+                <h3 class="category-title category-reception">
+                    <i class="fas fa-home"></i>
+                    接待中心頁面 - 功能全面升級
+                </h3>
+                
+                <div class="update-grid">
+                    <div class="update-item item-reception">
+                        <div class="update-item-title title-reception">
+                            <i class="fas fa-stopwatch"></i>
+                            計時器功能
+                        </div>
+                        <p class="update-item-desc">新增完整的計時器功能，允許用戶啟動、暫停和重置計時器。</p>
+                    </div>
+                    
+                    <div class="update-item item-reception">
+                        <div class="update-item-title title-reception">
+                            <i class="fas fa-sign-in-alt"></i>
+                            彈窗登入界面
+                        </div>
+                        <p class="update-item-desc">將登入按鈕改為彈窗登入界面，直接提交登入請求，提升用戶體驗。</p>
+                    </div>
+                    
+                    <div class="update-item item-reception">
+                        <div class="update-item-title title-reception">
+                            <i class="fas fa-sign-out-alt"></i>
+                            改進登出功能
+                        </div>
+                        <p class="update-item-desc">通過 AJAX 發送登出請求，成功後自動跳轉到 usercenter.php。</p>
+                    </div>
+                    
+                    <div class="update-item item-reception">
+                        <div class="update-item-title title-reception">
+                            <i class="fas fa-bug"></i>
+                            修復事件綁定錯誤
+                        </div>
+                        <p class="update-item-desc">修復登入輸入框事件綁定錯誤，確保元素存在時才綁定。</p>
+                    </div>
+                    
+                    <div class="update-item item-reception">
+                        <div class="update-item-title title-reception">
+                            <i class="fas fa-tasks"></i>
+                            待辦事項清單
+                        </div>
+                        <p class="update-item-desc">新增待辦事項清單功能，使用 localStorage 儲存任務。</p>
+                    </div>
+                    
+                    <div class="update-item item-reception">
+                        <div class="update-item-title title-reception">
+                            <i class="fas fa-cloud-sun"></i>
+                            天氣查詢功能
+                        </div>
+                        <p class="update-item-desc">新增天氣查詢功能，使用 OpenWeatherMap API 獲取天氣數據。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-divider"></div>
+            
+            <!-- 會員中心升級 -->
+            <div class="category-section">
+                <h3 class="category-title category-usercenter">
+                    <i class="fas fa-users"></i>
+                    會員系統全面升級
+                    <span class="version-badge">Ver 4.0</span>
+                </h3>
+                
+                <div class="update-grid">
+                    <div class="update-item item-usercenter">
+                        <div class="update-item-title title-usercenter">
+                            <i class="fas fa-user-cog"></i>
+                            usercenter 升級
+                        </div>
+                        <p class="update-item-desc">更簡潔/擴展了會員中心(資訊&點播/福利)的互動功能。</p>
+                    </div>
+                    
+                    <div class="update-item item-usercenter">
+                        <div class="update-item-title title-usercenter">
+                            <i class="fas fa-paint-brush"></i>
+                            登入系統 UI 重寫
+                        </div>
+                        <p class="update-item-desc">重寫 LOGIN/signup/forget_pw 的UI - 升級Ver 2.0，更現代化。</p>
+                    </div>
+                    
+                    <div class="update-item item-usercenter">
+                        <div class="update-item-title title-usercenter">
+                            <i class="fas fa-tachometer-alt"></i>
+                            儀表板整合
+                        </div>
+                        <p class="update-item-desc">把本來在會員儀表板(點播/福利)的功能整合到統一的點播/福利儀表板。</p>
+                    </div>
+                    
+                    <div class="update-item item-usercenter">
+                        <div class="update-item-title title-usercenter">
+                            <i class="fas fa-dice"></i>
+                            抽運籤遊戲
+                        </div>
+                        <p class="update-item-desc">新增一個抽運籤遊戲，增加用戶互動樂趣。</p>
+                    </div>
+                    
+                    <div class="update-item item-usercenter">
+                        <div class="update-item-title title-usercenter">
+                            <i class="fas fa-crown"></i>
+                            會員等級系統
+                        </div>
+                        <p class="update-item-desc">增加會員等級系統(高級/VIP等等)，提供差異化服務。</p>
+                    </div>
+                    
+                    <div class="update-item item-usercenter">
+                        <div class="update-item-title title-usercenter">
+                            <i class="fas fa-server"></i>
+                            伺服器狀態檢查
+                        </div>
+                        <p class="update-item-desc">新增伺服器狀態檢查功能，實時監控系統運行狀態。</p>
+                    </div>
+                </div>
+                
+                <!-- 舊更新內容 -->
+                <div class="sub-section">
+                    <h4 class="sub-title">舊更新內容 (25/5/4-Before)</h4>
+                    <ul class="feature-list">
+                        <li>增加訪客/會員功能 - 新增更多卡片，擴展會員中心互動功能</li>
+                        <li>遠征遊戲中心</li>
+                        <li>會員(V3.0)/遊戲中心(V2.0)UI美化</li>
+                        <li>增加版本鎖</li>
+                        <li>增加伺服器維護(管理/頁面)</li>
+                        <li>增加後台自動管理平台</li>
+                        <li>增加福利申請卡片(申請驗證碼/福利申請進度/福利播放)</li>
+                        <li>重寫LOGIN/signup的UI&要求 —v1.0</li>
+                        <li>公告UI美化</li>
+                        <li>主更新因更改Saka0u0.tplink.com & 修復因本次更新的問題</li>
+                        <li>member_edit.php - 解決 Email 修改後顯示和更新問題</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section-divider"></div>
+            
+            <!-- 點播/福利系統更新 -->
+            <div class="category-section">
+                <h3 class="category-title category-playback">
+                    <i class="fas fa-music"></i>
+                    點播/福利系統更新記錄
+                </h3>
+                
+                <div class="update-grid">
+                    <div class="update-item item-playback">
+                        <div class="update-item-title title-playback">
+                            <i class="fas fa-search"></i>
+                            伺服器與音樂查詢系統
+                        </div>
+                        <p class="update-item-desc">增加點播權被封功能 & 管理界面。</p>
+                    </div>
+                    
+                    <div class="update-item item-playback">
+                        <div class="update-item-title title-playback">
+                            <i class="fas fa-chart-bar"></i>
+                            福利審查系統
+                        </div>
+                        <p class="update-item-desc">增加福利申請統計報告功能。</p>
+                    </div>
+                    
+                    <div class="update-item item-playback">
+                        <div class="update-item-title title-playback">
+                            <i class="fas fa-star"></i>
+                            會員等級效果
+                        </div>
+                        <p class="update-item-desc">新的會員等級有不同的效果(開發中)。</p>
+                    </div>
+                </div>
+                
+                <!-- 舊點播更新內容 -->
+                <div class="sub-section">
+                    <h4 class="sub-title">舊點播系統更新</h4>
+                    <ul class="feature-list">
+                        <li>點播/福利儀表板 - 增加本來在hear的音樂/福利相關內容</li>
+                        <li>點播時間限制 - 根據台主要求現在點播系統只會在<span class="time-badge">(UTC+08:00) 18:00 ~ 02:00 (次日)</span>期間開放</li>
+                        <li>點播次數限制 - 新增每日 3 次點播限制，僅對 lv = 1(訪客) 生效</li>
+                        <li>福利時間限制 - 根據台主要求現在福利系統只會在<span class="time-badge">(UTC+08:00) 20:00 ~ 21:00</span>期間開放</li>
+                        <li>福利申請系統 - 增加福利申請(申請驗證碼/福利申請進度/福利播放)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 元信息 -->
+            <div class="meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">發佈日期</span>
+                    <span class="meta-value">2025-04-30</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">歸檔日期</span>
+                    <span class="meta-value">2025-10-15</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">類型</span>
+                    <span class="meta-value">其他</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">優先級</span>
+                    <span class="meta-value priority-badge">中</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 有限流量版本公告 -->
+        <div class="glass-card">
+            <div class="update-date">
+                <i class="far fa-calendar-alt"></i>
+                發佈日期：2023年6月6日
+            </div>
+            <h2 class="update-title">
+                【主台-異地-有限流量】總修復和更新
+            </h2>
+            
+            <div class="update-item item-usercenter">
+                <div class="update-item-title title-usercenter">
+                    <i class="fas fa-tachometer-alt"></i>
+                    會員系統 V2.0 更新
+                </div>
+                <p class="update-item-desc">主台的更新時的會員系統V2.0的重要升級，為後續功能擴展奠定基礎。</p>
+            </div>
+            
+            <!-- 元信息 -->
+            <div class="meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">發佈日期</span>
+                    <span class="meta-value">2023-06-06</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">歸檔日期</span>
+                    <span class="meta-value">2025-10-15</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">類型</span>
+                    <span class="meta-value">系統升級</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁腳 -->
+        <div class="footer">
+            <p>© 2023 網站更新歷史 | 此為歸檔內容，最後更新於 2025年4月30日</p>
+        </div>
+    </div>
+
+    <script>
+        // 主題切換功能
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // 卡片懸停效果
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.01)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // 項目懸停效果
+        document.querySelectorAll('.update-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
