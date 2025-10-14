@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前台自架系統修復和更新 - 網站更新歷史</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8e44ad;
+            --secondary-color: #9b59b6;
+            --accent-color: #e74c3c;
+            --accent-2: #3498db;
+            --accent-3: #2ecc71;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            --archive-color: #8e9eab;
+            --version-color: #e67e22;
+        }
+
+        .dark-mode {
+            --primary-color: #9b59b6;
+            --secondary-color: #8e44ad;
+            --accent-color: #e74c3c;
+            --accent-2: #3498db;
+            --accent-3: #2ecc71;
+            --text-color: #f8f9fa;
+            --bg-color: #121212;
+            --card-bg: rgba(30, 30, 30, 0.85);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            --archive-color: #6c757d;
+            --version-color: #f39c12;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+            padding-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-2), var(--accent-3));
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .header-section {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: white;
+        }
+
+        .header-section h1 {
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-size: 2.5rem;
+        }
+
+        .header-section p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .archive-badge {
+            background: rgba(142, 158, 171, 0.3);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, var(--version-color), #e67e22);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-block;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.4);
+        }
+
+        .update-date {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .update-date i {
+            margin-right: 0.5rem;
+        }
+
+        .update-title {
+            font-weight: 800;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .section-divider {
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-2), var(--accent-3));
+            border-radius: 3px;
+            margin: 2.5rem 0;
+            opacity: 0.7;
+        }
+
+        .category-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .category-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid;
+            display: flex;
+            align-items: center;
+        }
+
+        .category-title i {
+            margin-right: 0.7rem;
+        }
+
+        .category-frontend {
+            border-bottom-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .update-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .update-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+            position: relative;
+        }
+
+        .dark-mode .update-item {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .update-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-mode .update-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .item-current {
+            border-left-color: var(--accent-color);
+        }
+
+        .item-old {
+            border-left-color: var(--accent-2);
+        }
+
+        .item-future {
+            border-left-color: var(--accent-3);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-current {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .status-old {
+            background: var(--accent-2);
+            color: white;
+        }
+
+        .status-future {
+            background: var(--accent-3);
+            color: white;
+        }
+
+        .update-item-title {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            padding-right: 4rem;
+        }
+
+        .update-item-title i {
+            margin-right: 0.5rem;
+        }
+
+        .title-current {
+            color: var(--accent-color);
+        }
+
+        .title-old {
+            color: var(--accent-2);
+        }
+
+        .title-future {
+            color: var(--accent-3);
+        }
+
+        .update-item-desc {
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 1rem;
+        }
+
+        .feature-list li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .feature-list li:before {
+            content: '✓';
+            color: var(--accent-3);
+            font-weight: bold;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .version-tag {
+            background: var(--version-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .meta-info {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-value {
+            font-weight: 600;
+        }
+
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .back-button:hover {
+            color: var(--accent-color);
+            transform: translateX(-5px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .completion-banner {
+            background: linear-gradient(135deg, var(--accent-3), #27ae60);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 1.5rem;
+            }
+            
+            .header-section {
+                padding: 2rem 0 1rem;
+            }
+            
+            .header-section h1 {
+                font-size: 2rem;
+            }
+            
+            .update-title {
+                font-size: 1.8rem;
+            }
+            
+            .meta-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .category-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .update-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .update-item-title {
+                padding-right: 0;
+            }
+            
+            .status-badge {
+                position: static;
+                display: inline-block;
+                margin-left: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主題切換按鈕 -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="container">
+        <!-- 頁面標題 -->
+        <div class="header-section">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> 返回更新歷史
+            </a>
+            <h1>【前台-自架】修復和更新</h1>
+            <p>2024~25年9-10月系統升級與功能優化</p>
+            <div class="version-badge">
+                <i class="fas fa-flag-checkered"></i> 完結 V2.0
+            </div>
+            <div class="archive-badge">
+                <i class="fas fa-archive"></i> 已歸檔 - 此為歷史更新內容
+            </div>
+        </div>
+
+        <!-- 更新內容 -->
+        <div class="glass-card">
+            <div class="update-date">
+                <i class="far fa-calendar-alt"></i>
+                發佈日期：2025年9月17日
+            </div>
+            <h2 class="update-title">
+                【前台-自架】2024~25/9-10月修復和更新 (完結V2.0)
+            </h2>
+
+            <!-- 完成標語 -->
+            <div class="completion-banner">
+                <h4><i class="fas fa-trophy"></i> V2.0 版本完成！</h4>
+                <p>前台自架系統已達到穩定版本，具備完整功能與優化體驗</p>
+            </div>
+            
+            <!-- 前站系統更新 -->
+            <div class="category-section">
+                <h3 class="category-title category-frontend">
+                    <i class="fas fa-desktop"></i>
+                    前站系統全面升級
+                </h3>
+                
+                <h4 class="mb-3" style="color: var(--accent-color);">
+                    <i class="fas fa-sync-alt"></i> 現在更新的功能
+                </h4>
+                
+                <div class="update-grid">
+                    <div class="update-item item-current">
+                        <span class="status-badge status-current">最新</span>
+                        <div class="update-item-title title-current">
+                            <i class="fas fa-shield-alt"></i>
+                            自動IP封鎖系統
+                        </div>
+                        <p class="update-item-desc">開發出定期自動更新封鎖惡意IP系統，增強網站安全性。</p>
+                    </div>
+                    
+                    <div class="update-item item-current">
+                        <span class="status-badge status-current">最新</span>
+                        <div class="update-item-title title-current">
+                            <i class="fas fa-server"></i>
+                            伺服器狀態檢查
+                        </div>
+                        <p class="update-item-desc">新增伺服器狀態實時監控功能，確保系統穩定運行。</p>
+                    </div>
+                    
+                    <div class="update-item item-current">
+                        <span class="status-badge status-current">最新</span>
+                        <div class="update-item-title title-current">
+                            <i class="fas fa-broadcast-tower"></i>
+                            NC 台獨立前站
+                            <span class="version-tag">v2.0</span>
+                        </div>
+                        <p class="update-item-desc">將 NC 台獨立出來作為前站，提升系統架構清晰度。</p>
+                    </div>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <h4 class="mb-3" style="color: var(--accent-2);">
+                    <i class="fas fa-history"></i> 舊更新功能
+                </h4>
+                
+                <div class="update-grid">
+                    <div class="update-item item-old">
+                        <span class="status-badge status-old">已實現</span>
+                        <div class="update-item-title title-old">
+                            <i class="fas fa-user-friends"></i>
+                            多角色界面
+                        </div>
+                        <p class="update-item-desc">增加訪客/會員/管理界面 & 登入/註冊系統。</p>
+                    </div>
+                    
+                    <div class="update-item item-old">
+                        <span class="status-badge status-old">已實現</span>
+                        <div class="update-item-title title-old">
+                            <i class="fas fa-tools"></i>
+                            伺服器維護系統
+                        </div>
+                        <p class="update-item-desc">增加伺服器維護管理頁面，方便系統維護操作。</p>
+                    </div>
+                    
+                    <div class="update-item item-old">
+                        <span class="status-badge status-old">已實現</span>
+                        <div class="update-item-title title-old">
+                            <i class="fas fa-gift"></i>
+                            福利申請系統
+                        </div>
+                        <p class="update-item-desc">增加福利申請(申請驗證碼/福利申請進度/福利播放)功能。</p>
+                    </div>
+                    
+                    <div class="update-item item-old">
+                        <span class="status-badge status-old">已實現</span>
+                        <div class="update-item-title title-old">
+                            <i class="fas fa-globe"></i>
+                            域名優化
+                        </div>
+                        <p class="update-item-desc">改用更好的域址，提升品牌形象和訪問體驗。</p>
+                    </div>
+                    
+                    <div class="update-item item-old">
+                        <span class="status-badge status-old">已實現</span>
+                        <div class="update-item-title title-old">
+                            <i class="fas fa-mobile-alt"></i>
+                            跨平台支持
+                        </div>
+                        <p class="update-item-desc">增加版本2，支持手機和PC收聽音樂+點播功能。</p>
+                    </div>
+                    
+                    <div class="update-item item-old">
+                        <span class="status-badge status-old">已實現</span>
+                        <div class="update-item-title title-old">
+                            <i class="fas fa-history"></i>
+                            歷史公告系統
+                        </div>
+                        <p class="update-item-desc">新增歷史公告功能，記錄系統更新歷程。</p>
+                    </div>
+                    
+                    <div class="update-item item-old">
+                        <span class="status-badge status-old">已實現</span>
+                        <div class="update-item-title title-old">
+                            <i class="fas fa-server"></i>
+                            24小時服務
+                        </div>
+                        <p class="update-item-desc">使用NUC作為伺服器，實現24小時不間斷服務。</p>
+                    </div>
+                </div>
+                
+                <!-- 其他舊功能列表 -->
+                <div class="mt-4">
+                    <h5>其他已實現功能：</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="feature-list">
+                                <li>增加默認播放功能</li>
+                                <li>增加點播狀態顯示</li>
+                                <li>更新播放歷史v1.5</li>
+                                <li>增加現時點播數量統計</li>
+                                <li>增加合計播放時間統計</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="feature-list">
+                                <li>增加系列歌單功能</li>
+                                <li>增加時間歌單功能</li>
+                                <li>增加點歌系統訊息</li>
+                                <li>修復點播次數顯示問題</li>
+                                <li>美化主頁和歷史公告</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <h4 class="mb-3" style="color: var(--accent-3);">
+                    <i class="fas fa-lightbulb"></i> 未來想法 (未實施)
+                </h4>
+                
+                <div class="update-item item-future">
+                    <span class="status-badge status-future">規劃中</span>
+                    <div class="update-item-title title-future">
+                        <i class="fas fa-gamepad"></i>
+                        訪客抽卡遊戲
+                    </div>
+                    <p class="update-item-desc">增加訪客遊戲功能 - 抽卡系統(無記錄)，提升用戶互動體驗。</p>
+                </div>
+            </div>
+            
+            <!-- 元信息 -->
+            <div class="meta-info">
+                <div class="meta-item">
+                    <span class="meta-label">發佈日期</span>
+                    <span class="meta-value">2025-09-17</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">歸檔日期</span>
+                    <span class="meta-value">2025-10-15</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">類型</span>
+                    <span class="meta-value">新功能</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">優先級</span>
+                    <span class="meta-value priority-badge">高</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁腳 -->
+        <div class="footer">
+            <p>© 2023 網站更新歷史 | 此為歸檔內容，最後更新於 2025年9月17日</p>
+            <p><small><i class="fas fa-info-circle"></i> V2.0 版本已完結，系統進入穩定運行階段</small></p>
+        </div>
+    </div>
+
+    <script>
+        // 主題切換功能
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // 卡片懸停效果
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.01)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // 項目懸停效果
+        document.querySelectorAll('.update-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
